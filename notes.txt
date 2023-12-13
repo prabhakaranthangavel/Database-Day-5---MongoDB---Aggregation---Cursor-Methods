@@ -1,0 +1,215 @@
+Contents
+
+1.keywords
+2.cursor methods - map, toArray, pretty, forEach, limit, count, sort
+3.Aggregation
+
+*************************************************************************************************************************
+
+1.keywords
+
+    map:
+        query: db.users.find().map(function(u) { return u.name; })
+
+        explanation: returns an array of names of all the documents in the collection "users"
+    
+    toArray:
+        query: db.users.find().toArray()
+
+        explanation: returns an array of all the documents in the collection "users"
+    
+    pretty:
+        query: db.users.find().pretty()
+
+        explanation: returns all the documents in the collection "users" in a formatted way
+    
+    forEach:
+        query: db.users.find().forEach(function(u) { print(u.name); })
+
+        explanation: prints the name of all the documents in the collection "users"
+    
+    limit:
+        query: db.users.find().limit(2)
+
+        explanation: returns the first 2 documents in the collection "users"
+    
+    count:
+        query: db.users.find().count()
+
+        explanation: returns the number of documents in the collection "users"
+    
+    sort:
+        query: db.users.find().sort({name: 1})
+
+        explanation: returns all the documents in the collection "users" sorted in ascending order of name
+        (change 1 to -1 to sort in descending order)
+
+*************************************************************************************************************************
+
+1.cursor methods
+
+
+cursor ஐ create செய்வதற்கு
+let cursor = db.collectionname.find();
+
+
+Example:
+
+let cursor = db.products.find();
+BlogDB என்ற database ல் உள்ள products என்ற collection ல் உள்ள data ஐ காட்டும்.
+வரக்கூடிய output ஆனது ஒரு object ஆக வரும்.
+
+
+cursor;
+BlogDB என்ற database ல் உள்ள products என்ற collection ல் உள்ள data கள் அனைத்தும் cursor என்ற reference ல் store செய்து வைத்திருக்கும்.
+இப்பொழுதும் cursor என்று கொடுத்தாலும் products என்ற collection ல் உள்ள data ஐ காட்டும்.
+வரக்கூடிய output ஆனது ஒரு object ஆக வரும்.
+
+                ************************************************************
+toArray methods :
+
+cursor.toArray();
+toArray என்ற method ஐ பயன்படுத்தி products என்ற collection ல் உள்ள object ஐ Array of Object ஆக மாற்றலாம்.
+
+
+let cursor = db.products.find();
+மீண்டும் cursor ஐ define செய்ய வேண்டும்
+
+
+let productsArray = cursor.toArray();
+productsArray;
+இப்பொழுதும் அதே போல் வரக்கூடிய output ஐ Array of Object ஆக காட்டும்.
+
+                ************************************************************
+
+forEach methods :
+
+productsArray.forEach ( (doc) => {
+    print (doc) });
+
+products என்ற collection ல் உள்ள Array of Object ஐ print செய்யலாம்.
+
+
+productsArray.forEach ( (doc) => {
+    print (doc.product_name) });
+
+products என்ற collection ல் உள்ள product_name ஐ மட்டும் print செய்து காட்டும்.
+
+
+db.products.find().forEach( (doc) => {
+    print(doc.id + " " + doc.product_name + " " + doc.product_price)
+} )
+
+products என்ற collection ல் உள்ள product_id & product_name & product_price ஐ print செய்து காட்டும்.
+
+                ************************************************************
+
+push methods :
+
+db.products.find().forEach ( doc => productsX.push (doc.id + " " + doc.product_name + " " + doc.product_price));
+productsX;
+
+products என்ற collection ல் உள்ள data ஐ productsX க்கு push செய்கிறோம்.
+அதனை productsX; என்று கொடுத்து காணலாம்.
+
+                ************************************************************
+
+map methods :
+
+productsX.map(product => product.split (' ') );
+வரக்கூடிய output ஆனது split ஆகி வரும்.
+
+                ************************************************************
+
+count methods :
+
+db.products.find().count();
+என்று கொடுக்கும் போது அந்த databaseன் collectionல் எத்தனை data க்கள் உள்ளன என்பதை நம்பருடன் காட்டும்.
+
+                ************************************************************
+
+sort methods :
+
+db.products.find( {} )
+products என்ற collection ல் உள்ள அனைத்து data ஐ காட்டும்.
+
+
+db.products.find( {},  { _id:0, product_price:1 } );
+products என்ற collection ல் உள்ள product_price என்ற data ஐ காட்டும்.
+
+
+db.products.find( {},  { _id:0, product_price:1 } ).sort ( {product_price: -1} );
+product_price ன் value ஆனது descending order ல் sort ஆகி வரும்.
+
+
+db.products.find( {},  { _id:0, product_price:1 } ).sort ( {product_price: -1} ).forEach(doc => print(doc.product_price));
+product_price ன் value ஐ print செய்து காட்டும்.
+
+*************************************************************************************************************************
+
+2.Aggregation
+
+===>Aggregate means for group by, sum, average, min or max
+
+===>Aggregation:
+        - Aggregation operations process data records and return computed results.
+        - Aggregation operations group values from multiple documents together, and can perform a variety of operations on the grouped data to return a single result.
+        - MongoDB provides three ways to perform aggregation: the aggregation pipeline, the map-reduce function, and single purpose aggregation methods.
+
+===>keywords
+
+    group:
+        query: db.users.aggregate([{$group: {_id: "$city", count: {$sum: 1}}}])
+
+        explanation: returns the number of documents in the collection "users" grouped by city
+    
+    match:
+        query: db.users.aggregate([{$match: {city: "New York"}}])
+
+        explanation: returns all the documents in the collection "users" with city as "New York"
+    
+    deleteOne:
+        query: db.users.deleteOne({name: "John"})
+
+        explanation: deletes the first document in the collection "users" with name as "John"
+    
+    deleteMany:
+        query: db.users.deleteMany({name: "John"})
+
+        explanation: deletes all the documents in the collection "users" with name as "John"
+
+
+===>Example
+
+db.products.find ( {}, { _id:0, product_material:1} ).forEach (doc => print (doc.product_material) );
+
+product_material ஐ print செய்து காட்டும்.
+
+
+db.products.aggregate ([
+    {
+        $group: {
+            _id : '$product_material',
+            total : { $sum : $product_price }
+        }
+    }
+])
+
+product_material ன் item ஐ list எடுத்து அதனுடைய total ஐ காட்டும்.
+
+
+db.products.aggregate ([
+    {
+        $group: {
+            _id   : '$product_material',
+            total : { $sum : $product_price },
+
+          average : { $avg : '$product_price' }
+
+        }
+    }
+])
+
+product_material ன் item ஐ list எடுத்து அதனுடைய total + average ஐ காட்டும். 
+
+*************************************************************************************************************************
