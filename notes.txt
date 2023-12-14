@@ -3,6 +3,7 @@ Contents
 1.keywords
 2.cursor methods - map, toArray, pretty, forEach, limit, count, sort
 3.Aggregation
+4.Client Side Rendering (CSR) vs Server Side Rendering (SSR)
 
 *************************************************************************************************************************
 
@@ -211,5 +212,66 @@ db.products.aggregate ([
 ])
 
 product_material ன் item ஐ list எடுத்து அதனுடைய total + average ஐ காட்டும். 
+
+*************************************************************************************************************************
+
+4.Client Side Rendering (CSR) vs Server Side Rendering (SSR):
+
+what is rendering?
+
+===>rendering is a process to convert the data into HTML and CSS and display it on the browser.
+    ஒரு data ஐ HTML ஆக convert செய்து browser க்குள் load செய்யும் செயலைத்தான் "Rendering" என்று அழைக்கிறோம்.
+
+===>நம்முடைய data ஆனது server sideல் இருக்கும் அதனை fetch செய்து client side க்கு மாற்றுவோம்.
+    இதற்கு rendering என்ற process பயன்படும்.
+
+
+what is client side rendering?
+ 
+====>client side rendering process happens on the client side (browser).
+     client side rendering ஆனது முதலில் client side அதாவது browser side ல் நடைபெறும்.
+
+    Step 1 :when a user requests a webpage, the server sends the HTML, CSS, and JS files to the browser.
+            server ஆனது தேவையான HTML, CSS, and JS போன்ற files களை browser க்கு அனுப்பும்.
+
+    Step 2 :javascript is responsible for fetching the data from the server and rendering it dynamically on the browser (client side).
+            முழுமையான  javascript functionalities ஐ நாம் நேரடியாக அடைய முடியாது.
+            அதற்கு பதிலாக requests ஆக நாம் அடைவோம்.
+
+===>Advantages:
+               fast initial page load time.
+               better user experience.
+
+===>Disadvantages:
+               slower time to load the content.
+               bad SEO (search engine optimization): search engines can't read the content of the page and might not be able to index the page.
+    
+
+what is server side rendering?
+
+===>server side rendering process happens on the server.
+    server side rendering ஆனது முதலில் server side ல் நடைபெறும்.
+
+    Step 1 :when a user requests a webpage, the server sends the HTML, CSS, and JS files to the browser.
+            server ஆனது தேவையான HTML, CSS, and JS போன்ற files களை browser க்கு அனுப்பும்.
+
+    Step 2 :the server is responsible for fetching the data from the server and rendering it dynamically on the browser (client side).
+            முழுமையான  javascript functionalities ஐ நாம் நேரடியாக அடைவோம்.
+
+===>Advantages:
+               better SEO (search engine optimization): search engines can read the content of the page and index it.
+               faster time to load the content.
+
+===>Disadvantages:
+               slower initial page load time.
+               bad user experience.
+
+
+===>frameworks that support server side rendering:
+      - next.js (react): supports both client side rendering and server side rendering out of the box.
+      - nuxt.js (vue): supports both client side rendering and server side rendering out of the box.
+      - angular universal (angular): supports both client side rendering and server side rendering out of the box.
+    
+===>We can achieve server side rendering in react by using next.js or ReactDOMServer without using any third party libraries.
 
 *************************************************************************************************************************
